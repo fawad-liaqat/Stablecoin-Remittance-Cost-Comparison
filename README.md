@@ -125,7 +125,7 @@ See `index.html` policy section and `methodology_notes.md` for full regulatory a
 ## Analyst Information
 
 - **Created by:** Fawad Liaqat
-- **Date:** March 28, 2026
+- **Date:** March 30, 2026
 - **Purpose:** Portfolio analysis / fintech research / diaspora education
 - **Sources:** Public rate cards, live platform data, regulatory documentation
 
