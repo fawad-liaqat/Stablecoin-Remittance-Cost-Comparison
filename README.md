@@ -1,4 +1,4 @@
-Stablecoin Remittance Cost Comparison for Pakistan
+## Stablecoin Remittance Cost Comparison for Pakistan
 
 ## Overview
 Complete data-driven analysis comparing total cost of sending $500 to Pakistan through 4 channels (Banks, MTOs, Mobile Wallets, Stablecoin) across 5 major corridors (UAE, Saudi Arabia, UK, US, Qatar).
