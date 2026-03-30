@@ -1,9 +1,9 @@
-# Project P07: Stablecoin Remittance Cost Comparison for Pakistan
+Stablecoin Remittance Cost Comparison for Pakistan
 
 ## Overview
 Complete data-driven analysis comparing total cost of sending $500 to Pakistan through 4 channels (Banks, MTOs, Mobile Wallets, Stablecoin) across 5 major corridors (UAE, Saudi Arabia, UK, US, Qatar).
 
-**Analysis Date:** March 28, 2026  
+**Analysis Date:** March 30, 2026  
 **Transfer Amount:** USD 500  
 **Reference Rate:** USD/PKR 279.5 (interbank)  
 **SBP Policy Rate:** 10.5% per annum
@@ -32,21 +32,6 @@ Point-in-time P2P rate data from Binance P2P and OKX P2P.
 - **Median Sell:** 278.0 PKR/USDT
 - **Spread:** 1.5% (from 277.0-281.0 range)
 
-### 2. Analysis & Documentation
-
-#### `index.html`
-**Interactive dashboard** - the main deliverable. Features:
-- Professional dark blue header with gradient
-- Summary statistics cards (cheapest overall, cheapest per corridor, savings vs banks)
-- Filterable corridor buttons (All, UAE, Saudi Arabia, UK, US, Qatar)
-- Sortable/interactive cost comparison table (20 rows)
-- Chart.js bar chart showing average cost by channel
-- Expandable methodology section with data sources and formulas
-- 500+ word policy section on SBP regulatory requirements
-- Responsive design with smooth animations and hover effects
-- Timestamp warning on stablecoin volatility
-- Footer with analyst credit
-
 #### `methodology_notes.md`
 Comprehensive technical documentation including:
 - Data collection sources with URLs
@@ -58,14 +43,7 @@ Comprehensive technical documentation including:
 - Regulatory context and compliance gaps
 - Recommendations by user type
 
-#### `linkedin_article.md`
-800-1,200 word article for fintech/diaspora audience:
-- Hook: "8x cheaper than banks"
-- Per-channel analysis with use cases
-- Data visualization in prose
-- Regulatory context and SBP opportunity
-- Call to action for reader feedback
-- Professional tone suitable for portfolio/publication
+
 
 ### 3. Key Findings
 
@@ -101,19 +79,6 @@ Comprehensive technical documentation including:
    - Cheapest: Mobile Wallets (2.60%)
    - Widest spreads due to smaller ecosystem
 
-## Files Structure
-
-```
-Project/
-├── index.html                    (Interactive dashboard - MAIN DELIVERABLE)
-├── linkedin_article.md           (800-1200 word article)
-├── methodology_notes.md          (Technical documentation)
-├── README.md                     (This file)
-└── data/
-    ├── rpw_raw.csv              (45 providers, raw data)
-    ├── cost_matrix.csv          (20 cost calculations)
-    └── stablecoin_snapshot.csv  (20 P2P trades)
-```
 
 ## How to Use
 
