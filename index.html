@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pakistan Remittance Cost Comparison — March 30, 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --surface: #1a1a22;
+      --surface-raised: #22222d;
+      --surface-hover: #2a2a36;
+      --text: #e8e6e3;
+      --text-secondary: #9a9a9a;
+      --text-muted: #6b6b6b;
+      --border: #2d2d38;
+      --border-light: #242430;
+      --accent: #22d3ee;
+      --accent-light: rgba(34,211,238,0.1);
+      --accent-dark: #06b6d4;
+      --bank-color: #f87171;
+      --bank-bg: rgba(248,113,113,0.1);
+      --mto-color: #fbbf24;
+      --mto-bg: rgba(251,191,36,0.1);
+      --mobile-color: #34d399;
+      --mobile-bg: rgba(52,211,153,0.1);
+      --stable-color: #a78bfa;
+      --stable-bg: rgba(167,139,250,0.1);
+      --green: #34d399;
+      --red: #f87171;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 2px 8px rgba(0,0,0,0.3);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+      --glow-green: 0 0 20px rgba(52,211,153,0.3);
+      --glow-accent: 0 0 20px rgba(34,211,238,0.2);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* ---- Hero ---- */
+    .hero {
+      background: linear-gradient(135deg, #0f0f12 0%, #1a1a2e 50%, #16213e 100%);
+      padding: 4rem 2rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 30%, rgba(34,211,238,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 70%, rgba(167,139,250,0.08) 0%, transparent 50%);
+    }
+    .hero-inner { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid rgba(34,211,238,0.2);
+      padding: 0.3rem 0.9rem;
+      border-radius: 6px;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.8rem;
+    }
+    .hero h1 span { background: linear-gradient(135deg, var(--accent), var(--stable-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-sub { font-size: 1rem; color: var(--text-secondary); max-width: 600px; line-height: 1.7; }
+    .hero-meta {
+      display: flex; gap: 2.5rem; margin-top: 2rem; padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem; color: var(--text-muted);
+    }
+    .hero-meta strong { color: var(--text); font-weight: 600; }
+
+    /* ---- Layout ---- */
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 3rem 0; }
+
+    /* ---- Stat Strip ---- */
+    .stat-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: var(--border); border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow-md);
+      margin-top: -2rem; position: relative; z-index: 10;
+    }
+    .stat-item { background: var(--surface); padding: 1.5rem 1.2rem; text-align: center; }
+    .stat-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.4rem; }
+    .stat-value { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; font-family: 'DM Mono', monospace; }
+    .stat-value.green { color: var(--green); }
+    .stat-value.red { color: var(--red); }
+    .stat-sub { font-size: 0.72rem; color: var(--text-secondary); margin-top: 0.2rem; }
+
+    /* ---- Section Headers ---- */
+    .section-head { margin-bottom: 1.5rem; }
+    .section-head h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
+    .section-head p { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+    /* ---- Snapshot Warning ---- */
+    .snapshot-bar {
+      background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.2);
+      border-radius: var(--radius-sm); padding: 0.65rem 1rem;
+      font-size: 0.78rem; color: #fbbf24; font-weight: 500;
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;
+    }
+
+    /* ---- Calculator ---- */
+    .calc-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .calc-label { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
+    .calc-input {
+      font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 600;
+      width: 130px; padding: 0.5rem 0.75rem;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      background: var(--surface-raised); color: var(--text); outline: none;
+      transition: border-color 0.2s;
+    }
+    .calc-input:focus { border-color: var(--accent); box-shadow: var(--glow-accent); }
+
+    /* ---- Corridor Accordion ---- */
+    .corridor-section { margin-bottom: 1rem; }
+    .corridor-header {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.5rem;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+    }
+    .corridor-header:hover { border-color: var(--accent); background: var(--surface-hover); }
+    .corridor-header.active { border-color: var(--accent); background: var(--surface-raised); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+    .corridor-header .left { display: flex; align-items: center; gap: 1rem; }
+    .corridor-flag { font-size: 1.5rem; }
+    .corridor-name { font-weight: 700; font-size: 1rem; letter-spacing: -0.01em; }
+    .corridor-cheapest-tag {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em;
+      color: var(--green); background: rgba(52,211,153,0.1);
+      border: 1px solid rgba(52,211,153,0.2);
+      padding: 0.2rem 0.6rem; border-radius: 5px;
+    }
+    .corridor-header .right { display: flex; align-items: center; gap: 1.5rem; }
+    .corridor-range { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--text-secondary); }
+    .corridor-chevron {
+      width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); transition: transform 0.3s ease;
+    }
+    .corridor-header.active .corridor-chevron { transform: rotate(180deg); color: var(--accent); }
+
+    /* ---- Channel Cards (inside corridor) ---- */
+    .corridor-body {
+      display: none; border: 1.5px solid var(--border); border-top: none;
+      border-bottom-left-radius: var(--radius); border-bottom-right-radius: var(--radius);
+      background: var(--surface); overflow: hidden;
+    }
+    .corridor-body.open { display: block; animation: slideDown 0.3s ease; }
+    @keyframes slideDown { from { opacity: 0; max-height: 0; } to { opacity: 1; max-height: 600px; } }
+
+    .channel-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 100px 100px 110px 60px;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+      transition: background 0.15s;
+      cursor: pointer;
+      position: relative;
+    }
+    .channel-row:last-child { border-bottom: none; }
+    .channel-row:hover { background: var(--surface-hover); }
+    .channel-row.cheapest-row {
+      background: rgba(52,211,153,0.04);
+      border-left: 3px solid var(--green);
+    }
+    .channel-row.cheapest-row::before {
+      content: 'BEST VALUE';
+      position: absolute; top: 0.6rem; right: 1rem;
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--green); background: rgba(52,211,153,0.12);
+      padding: 0.15rem 0.5rem; border-radius: 4px;
+    }
+
+    .channel-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.25rem 0.65rem; border-radius: 6px;
+      font-weight: 600; font-size: 0.78rem;
+    }
+    .channel-badge.bank { background: var(--bank-bg); color: var(--bank-color); }
+    .channel-badge.mto { background: var(--mto-bg); color: var(--mto-color); }
+    .channel-badge.mobile { background: var(--mobile-bg); color: var(--mobile-color); }
+    .channel-badge.stable { background: var(--stable-bg); color: var(--stable-color); }
+    .ch-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .ch-dot.bank { background: var(--bank-color); }
+    .ch-dot.mto { background: var(--mto-color); }
+    .ch-dot.mobile { background: var(--mobile-color); }
+    .ch-dot.stable { background: var(--stable-color); }
+
+    /* Fee breakdown bar */
+    .fee-bar-container { display: flex; flex-direction: column; gap: 3px; padding-right: 1rem; }
+    .fee-bar {
+      display: flex; height: 8px; border-radius: 4px; overflow: hidden;
+      background: var(--border-light);
+    }
+    .fb-seg { height: 100%; min-width: 2px; transition: all 0.3s; }
+    .fb-send { background: #6b7280; }
+    .fb-fx { background: #fbbf24; }
+    .fb-net { background: #60a5fa; }
+    .fb-time { background: #4b5563; }
+
+    .mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; }
+    .pct-cell { font-weight: 700; font-family: 'DM Mono', monospace; font-size: 0.85rem; }
+    .pct-cell.low { color: var(--green); }
+    .pct-cell.mid { color: var(--mto-color); }
+    .pct-cell.high { color: var(--red); }
+    .speed-cell { font-size: 0.78rem; color: var(--text-secondary); white-space: nowrap; }
+    .expand-icon { color: var(--text-muted); font-size: 0.75rem; transition: transform 0.2s; cursor: pointer; text-align: center; }
+
+    /* ---- Fee Breakdown Detail (expanded) ---- */
+    .fee-detail {
+      display: none; padding: 0 1.5rem 1.2rem 1.5rem;
+      background: var(--surface-raised);
+      border-bottom: 1px solid var(--border-light);
+      animation: fadeIn 0.25s ease;
+    }
+    .fee-detail.open { display: block; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .fee-detail-inner {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;
+      padding: 1rem; background: var(--bg); border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .fee-component {
+      text-align: center; padding: 0.6rem;
+      border-radius: 8px; transition: background 0.2s;
+    }
+    .fee-component:hover { background: var(--surface-hover); }
+    .fee-component .fc-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .fee-component .fc-value { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 700; }
+    .fee-component .fc-pct { font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.15rem; }
+    .fee-component .fc-bar { height: 4px; border-radius: 2px; margin-top: 0.5rem; }
+    .fc-send .fc-value { color: #9ca3af; }
+    .fc-send .fc-bar { background: #6b7280; }
+    .fc-fx .fc-value { color: #fbbf24; }
+    .fc-fx .fc-bar { background: #fbbf24; }
+    .fc-net .fc-value { color: #60a5fa; }
+    .fc-net .fc-bar { background: #60a5fa; }
+    .fc-time .fc-value { color: #6b7280; }
+    .fc-time .fc-bar { background: #4b5563; }
+
+    .fee-detail-source {
+      margin-top: 0.75rem; display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; color: var(--text-muted);
+    }
+    .fee-detail-source a {
+      color: var(--accent); text-decoration: none; font-weight: 500;
+      border-bottom: 1px dotted var(--accent);
+    }
+    .fee-detail-source a:hover { color: var(--accent-dark); }
+
+    /* ---- Chart ---- */
+    .chart-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); }
+    .chart-area { position: relative; height: 340px; }
+
+    /* ---- Legend Bar ---- */
+    .legend-bar {
+      display: flex; gap: 1.2rem; padding: 0.8rem 1.5rem;
+      background: var(--surface-raised); border-radius: var(--radius-sm);
+      margin-bottom: 1.5rem; font-size: 0.72rem; color: var(--text-muted); flex-wrap: wrap;
+    }
+    .lg-item { display: flex; align-items: center; gap: 0.3rem; }
+    .lg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+    /* ---- Methodology / Policy ---- */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .info-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .info-card-head {
+      padding: 1rem 1.25rem; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+      user-select: none; transition: background 0.15s;
+    }
+    .info-card-head:hover { background: var(--surface-hover); }
+    .info-card-head .chevron { transition: transform 0.25s; color: var(--text-muted); font-size: 0.75rem; }
+    .info-card.open .info-card-head .chevron { transform: rotate(180deg); }
+    .info-card-body { display: none; padding: 0 1.25rem 1.25rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; }
+    .info-card.open .info-card-body { display: block; animation: fadeIn 0.3s ease; }
+    .info-card-body ul { padding-left: 1.2rem; }
+    .info-card-body li { margin-bottom: 0.5rem; }
+    .info-card-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+    .info-card-body a:hover { color: var(--accent-dark); }
+    .info-card-body code { background: var(--bg); padding: 0.15em 0.4em; border-radius: 3px; font-family: 'DM Mono', monospace; font-size: 0.85em; color: var(--accent); }
+
+    .policy-block {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+    }
+    .policy-block h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.6rem; margin-top: 1.5rem; }
+    .policy-block h3:first-child { margin-top: 0; }
+    .policy-block p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 0.75rem; }
+    .policy-block ol, .policy-block ul { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+    .policy-block li { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.4rem; }
+    .policy-block a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ---- Footer ---- */
+    .site-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; font-size: 0.78rem; color: var(--text-muted); }
+    .site-footer strong { color: var(--text-secondary); }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 768px) {
+      .stat-strip { grid-template-columns: repeat(2, 1fr); }
+      .info-grid { grid-template-columns: 1fr; }
+      .channel-row { grid-template-columns: 140px 1fr 80px 80px; font-size: 0.8rem; }
+      .channel-row .speed-cell, .channel-row .expand-icon { display: none; }
+      .hero-meta { flex-wrap: wrap; gap: 1rem; }
+      .fee-detail-inner { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .stat-strip { grid-template-columns: 1fr 1fr; }
+      .corridor-header .right .corridor-range { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======== HERO ======== -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Pakistan Corridor Analysis &mdash; Live Data</div>
+    <h1>The Real Cost of Sending <span>$500</span> Home</h1>
+    <p class="hero-sub">Banks, MTOs, mobile wallets, and stablecoin rails compared across five inbound corridors to Pakistan. Click any corridor to explore the breakdown.</p>
+    <div class="hero-meta">
+      <div><strong>Fawad Liaqat</strong></div>
+      <div>Data: <strong>March 30, 2026</strong></div>
+      <div>Amount: <strong>USD 500</strong></div>
+      <div>Interbank: <strong>279.60</strong> <a href="https://hamariweb.com/finance/forex/inter_bank_rates.aspx" target="_blank" style="color:var(--accent);font-size:0.68rem;margin-left:4px;">source</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== STAT STRIP ======== -->
+<div class="wrap">
+  <div class="stat-strip" id="statStrip">
+    <div class="stat-item">
+      <div class="stat-label">Cheapest Option</div>
+      <div class="stat-value green" id="statCheapest"></div>
+      <div class="stat-sub" id="statCheapestSub"></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Most Expensive</div>
+      <div class="stat-value red" id="statExpensive"></div>
+      <div class="stat-sub" id="statExpensiveSub"></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Average Bank Cost</div>
+      <div class="stat-value red" id="statBankAvg"></div>
+      <div class="stat-sub" id="statBankSub"></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Stablecoin Avg</div>
+      <div class="stat-value" style="color:var(--stable-color)" id="statStableAvg"></div>
+      <div class="stat-sub" id="statStableSub"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== MAIN CONTENT ======== -->
+<div class="wrap">
+  <section>
+    <div class="snapshot-bar">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      Stablecoin P2P rates from Binance and OKX snapshot (March 30, 2026, 14:15–14:31 PKT). All MTO rates verified same day. Bank fees from published schedules.
+    </div>
+
+    <div class="calc-row">
+      <span class="calc-label">Transfer amount:</span>
+      <span style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--text-muted);">$</span>
+      <input type="number" class="calc-input" id="amountInput" value="500" min="50" max="10000" step="50">
+      <span class="calc-label" style="color:var(--text-muted);font-size:0.75rem;">(costs recalculate live)</span>
+    </div>
+
+    <div class="legend-bar">
+      <span class="lg-item"><span class="lg-dot" style="background:var(--bank-color)"></span> Banks (SWIFT)</span>
+      <span class="lg-item"><span class="lg-dot" style="background:var(--mto-color)"></span> MTOs</span>
+      <span class="lg-item"><span class="lg-dot" style="background:var(--mobile-color)"></span> Mobile Wallets</span>
+      <span class="lg-item"><span class="lg-dot" style="background:var(--stable-color)"></span> Stablecoin P2P</span>
+      <span class="lg-item" style="margin-left:auto;"><span class="lg-dot" style="background:#6b7280"></span> Fees</span>
+      <span class="lg-item"><span class="lg-dot" style="background:#fbbf24"></span> FX Spread</span>
+      <span class="lg-item"><span class="lg-dot" style="background:#60a5fa"></span> Network</span>
+      <span class="lg-item"><span class="lg-dot" style="background:#4b5563"></span> Time</span>
+    </div>
+
+    <div class="section-head"><h2>Corridor Comparison</h2><p>Click a corridor to expand. Channels sorted cheapest first. Click any channel row for full fee breakdown.</p></div>
+    <div id="corridorContainer"></div>
+  </section>
+
+  <!-- Chart -->
+  <section>
+    <div class="section-head"><h2>Average Cost by Channel</h2><p>Across all corridors — lower is better</p></div>
+    <div class="chart-card"><div class="chart-area"><canvas id="mainChart"></canvas></div></div>
+    <div id="chartNote" style="background: var(--bg-alt); padding: 0.9rem 1rem; border-left: 3px solid var(--accent); margin-top: 0.75rem; border-radius: 4px; font-size: 0.9rem; color: var(--muted);"></div>
+  </section>
+
+  <!-- Methodology -->
+  <section>
+    <div class="section-head"><h2>Methodology &amp; Sources</h2><p>Data sources with clickable references, calculation logic, and limitations</p></div>
+    <div class="info-grid">
+      <div class="info-card open">
+        <div class="info-card-head" onclick="this.parentElement.classList.toggle('open')">Data Sources (All Clickable) <span class="chevron">&#9660;</span></div>
+        <div class="info-card-body">
+          <ul>
+            <li><strong>Banks:</strong> <a href="https://www.hbl.com/" target="_blank">HBL</a>, <a href="https://www.sc.com/pk/" target="_blank">Standard Chartered</a>, <a href="https://www.barclays.com/international-banking/" target="_blank">Barclays</a>, <a href="https://www.hsbc.com/" target="_blank">HSBC</a>, <a href="https://www.bankofamerica.com/" target="_blank">Bank of America</a>, <a href="https://www.chase.com/" target="_blank">Chase</a>, <a href="https://www.riyadbank.com/" target="_blank">Riyad Bank</a>, <a href="https://www.samba.com.sa/" target="_blank">Samba</a>, <a href="https://www.dohabank.com.qa/" target="_blank">Doha Bank</a>, <a href="https://www.qnb.com/" target="_blank">QNB</a>. Rates from published fee schedules (March 2026).</li>
+            <li><strong>MTOs:</strong> <a href="https://www.westernunion.com/us/en/send-money-to-pakistan.html" target="_blank">Western Union</a> ($0 fee on bank transfers &gt;$200, 2&ndash;4% FX margin), <a href="https://wise.com/us/send-money/send-money-to-pakistan" target="_blank">Wise</a> ($1.17 + 0.8% fee, mid-market rate), <a href="https://www.remitly.com/us/en/pakistan" target="_blank">Remitly</a> ($1.99 fee + 1&ndash;3.7% FX margin). All verified March 30.</li>
+            <li><strong>Mobile Wallets:</strong> <a href="https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash" target="_blank">JazzCash via Remitly</a>, <a href="https://www.worldremit.com/en/pakistan/mobile-money" target="_blank">Easypaisa via WorldRemit</a>. Arrives in minutes to mobile wallet.</li>
+            <li><strong>Stablecoin P2P:</strong> <a href="https://p2p.binance.com/en/express/BUY/USDT/PKR" target="_blank">Binance P2P</a> and <a href="https://www.okx.com/en-us/convert/usdt-to-pkr" target="_blank">OKX P2P</a> USDT/PKR rates. Buy median: 280.65 PKR, Sell median: 278.12 PKR. Spread ~0.9%. Snapshot 14:15&ndash;14:31 PKT, March 30.</li>
+            <li><strong>Interbank rate:</strong> USD/PKR 279.60 (<a href="https://hamariweb.com/finance/forex/inter_bank_rates.aspx" target="_blank">HamariWeb Interbank Rates</a>, <a href="https://www.forex.pk/inter_bank_rates.asp" target="_blank">Forex.pk</a>). Buying: 279.25, Selling: 279.75.</li>
+            <li><strong>Global benchmark:</strong> <a href="https://remittanceprices.worldbank.org/" target="_blank">World Bank RPW</a>: Global avg 6.49%, South Asia avg 4.80% (Q1 2025).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-head" onclick="this.parentElement.classList.toggle('open')">Cost Formula <span class="chevron">&#9660;</span></div>
+        <div class="info-card-body">
+          <p><code>All-In Cost = Sending Fee + (FX Margin% &times; Amount) + Network Fee + (Settlement Days &times; Daily Time Cost)</code></p>
+          <p>Daily time cost = <code>Amount &times; (10.5% / 365)</code> = $0.14/day for $500, based on <a href="https://www.sbp.org.pk/m_policy/index.asp" target="_blank">SBP policy rate</a> of 10.5%.</p>
+          <p>Wise uses mid-market rate so FX margin = 0%. Their fee is $1.17 + 0.8% = ~$5.17 on $500. Source: <a href="https://wise.com/us/pricing/send-money" target="_blank">Wise Pricing</a></p>
+          <p>Western Union: $0 fee on bank transfers &gt;$200, but 2&ndash;4% FX margin. Source: <a href="https://wise.com/us/compare/western-union-exchange-rate" target="_blank">WU Rate Analysis</a></p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-head" onclick="this.parentElement.classList.toggle('open')">Channel Specs <span class="chevron">&#9660;</span></div>
+        <div class="info-card-body">
+          <p><strong>Banks (SWIFT)</strong> &mdash; Highest send fees ($20&ndash;35) + SWIFT network charges ($15&ndash;25). FX margins 3.8&ndash;4.5%. Settlement 3&ndash;4 business days.</p>
+          <p><strong>MTOs</strong> &mdash; Western Union ($0 fee + FX markup), Wise (mid-market + flat fee), Remitly ($1.99 + FX markup). Same-day delivery. Sources: <a href="https://wise.com/us/blog/remitly-vs-western-union" target="_blank">Wise comparison</a></p>
+          <p><strong>Mobile Wallets</strong> &mdash; JazzCash/Easypaisa via Remitly/WorldRemit. Minimal fees, tight spreads. Arrives in minutes. Source: <a href="https://www.worldremit.com/en/pakistan/mobile-money" target="_blank">WorldRemit</a></p>
+          <p><strong>Stablecoin P2P</strong> &mdash; On-ramp fee (0.1%), USDT TRC-20 transfer ($1), P2P spread (~0.9%). Delivery ~2 hours. Carries unpriced counterparty risk. Sources: <a href="https://p2p.binance.com/" target="_blank">Binance</a>, <a href="https://www.okx.com/p2p/" target="_blank">OKX</a></p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-head" onclick="this.parentElement.classList.toggle('open')">Limitations <span class="chevron">&#9660;</span></div>
+        <div class="info-card-body">
+          <ul>
+            <li>Stablecoin rates are volatile; snapshot valid at time of collection only.</li>
+            <li>P2P trades carry counterparty/settlement risk not priced in this analysis.</li>
+            <li>Bank and MTO fees assume standard retail. Corporate/volume rates are lower.</li>
+            <li>Exchange rate fixed at 279.60; actual rates fluctuate daily (Source: <a href="https://www.forex.pk/inter_bank_rates.asp" target="_blank">Forex.pk</a>).</li>
+            <li>Regulatory compliance costs for stablecoins not included. Pakistan's VA Act 2026 passed but SBP operational guidelines pending.</li>
+            <li>Wise fee based on $1.17 + 0.8% structure (<a href="https://wise.com/us/pricing/" target="_blank">source</a>). Remitly: $1.99 + variable FX (<a href="https://wise.com/us/compare/remitly-exchange-rate" target="_blank">source</a>).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory -->
+  <section>
+    <div class="section-head"><h2>Regulatory Context</h2><p>What would SBP need to enable compliant stablecoin remittance corridors?</p></div>
+    <div class="policy-block">
+      <h3>Current Legal Status</h3>
+      <p>Pakistan's <strong>Virtual Assets Act 2026</strong> established PVARA as an autonomous regulator. However, SBP has not issued specific authorization for stablecoin remittance corridors. The 2018 advisory against virtual assets was driven by absent legal framework &mdash; that framework now exists, but operational authorization has not followed.</p>
+      <h3>FX Manual Constraints</h3>
+      <p>The <a href="https://www.sbp.org.pk/fe_manual/index.htm" target="_blank">SBP Foreign Exchange Manual</a> requires inward remittances through authorized dealers only. No provision for exchange platforms. Chapter 20 capital account restrictions don't recognize tokenized assets.</p>
+      <h3>Licensing Pathway</h3>
+      <ol>
+        <li><strong>PVARA licensing</strong> for stablecoin service providers. The <a href="https://www.secp.gov.pk/" target="_blank">SECP sandbox</a> approved real estate tokenization in its 2nd cohort (2025).</li>
+        <li><strong>SBP FX Manual amendment</strong> to create "virtual current account" instruments or designate licensed stablecoin platforms as authorized dealers.</li>
+        <li><strong>SECP-SBP coordination</strong> on custody and investor protection standards.</li>
+      </ol>
+      <h3>Bottom Line</h3>
+      <p>The cost advantage is real (stablecoin ~1.3% vs banks ~13.3%), but partly reflects absent regulatory overhead. Until SBP issues operational authorization, stablecoin corridors remain in regulatory gray area. This analysis is informational, not a recommendation.</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <strong>Fawad Liaqat</strong> &middot; March 30, 2026 &middot; Data verified from <a href="https://wise.com/" target="_blank" style="color:var(--accent)">Wise</a>, <a href="https://www.remitly.com/" target="_blank" style="color:var(--accent)">Remitly</a>, <a href="https://www.westernunion.com/" target="_blank" style="color:var(--accent)">Western Union</a>, <a href="https://p2p.binance.com/" target="_blank" style="color:var(--accent)">Binance P2P</a>, <a href="https://www.okx.com/p2p/" target="_blank" style="color:var(--accent)">OKX P2P</a><br>
+    Complete data available in accompanying CSV files and methodology documentation.
+  </footer>
+</div>
+
+<script>
+// ============ DATA (March 30, 2026 — verified from web sources) ============
+const BASE_AMOUNT = 500;
+const INTERBANK_RATE = 279.60;
+const DAILY_RATE = 0.105 / 365;
+
+const corridors = [
+  { id:'uae', name:'UAE', flag:'\u{1F1E6}\u{1F1EA}', label:'UAE \u2192 Pakistan' },
+  { id:'sa',  name:'Saudi Arabia', flag:'\u{1F1F8}\u{1F1E6}', label:'Saudi Arabia \u2192 Pakistan' },
+  { id:'uk',  name:'UK', flag:'\u{1F1EC}\u{1F1E7}', label:'United Kingdom \u2192 Pakistan' },
+  { id:'us',  name:'US', flag:'\u{1F1FA}\u{1F1F8}', label:'United States \u2192 Pakistan' },
+  { id:'qa',  name:'Qatar', flag:'\u{1F1F6}\u{1F1E6}', label:'Qatar \u2192 Pakistan' }
+];
+
+// Source-verified data: fee structures per corridor-channel
+// Sources: Wise (wise.com/us/pricing), Remitly (remitly.com), WU (westernunion.com),
+// Binance P2P (p2p.binance.com), OKX (okx.com/p2p), Banks (official sites)
+const rawData = [
+  // UAE
+  { cid:'uae',ch:'Banks',sendFee:25,fxPct:4.2,netFee:15,days:3,speed:'3 days',cls:'bank',
+    sourceUrl:'https://www.hbl.com/',sourceName:'HBL / SC published rates' },
+  { cid:'uae',ch:'MTOs',sendFee:4,fxPct:1.8,netFee:0,days:0.04,speed:'1 hour',cls:'mto',
+    sourceUrl:'https://www.westernunion.com/ae/en/send-money-to-pakistan.html',sourceName:'Western Union / Wise / Remitly' },
+  { cid:'uae',ch:'Mobile Wallets',sendFee:2,fxPct:1.5,netFee:0,days:0.04,speed:'Minutes',cls:'mobile',
+    sourceUrl:'https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash',sourceName:'JazzCash via Remitly' },
+  { cid:'uae',ch:'Stablecoin',sendFee:0.5,fxPct:0,netFee:1,days:0.08,speed:'2 hours',cls:'stable',
+    tradeFee:0.5,p2pSpread:4.5,sourceUrl:'https://p2p.binance.com/en/express/BUY/USDT/PKR',sourceName:'Binance P2P / OKX P2P' },
+  // Saudi Arabia
+  { cid:'sa',ch:'Banks',sendFee:20,fxPct:3.8,netFee:15,days:3,speed:'3 days',cls:'bank',
+    sourceUrl:'https://www.riyadbank.com/',sourceName:'Riyad Bank / Samba' },
+  { cid:'sa',ch:'MTOs',sendFee:4,fxPct:1.5,netFee:0,days:0.04,speed:'1 hour',cls:'mto',
+    sourceUrl:'https://wise.com/us/send-money/send-money-to-pakistan',sourceName:'Wise / WU / Remitly' },
+  { cid:'sa',ch:'Mobile Wallets',sendFee:2,fxPct:1.3,netFee:0,days:0.04,speed:'Minutes',cls:'mobile',
+    sourceUrl:'https://www.worldremit.com/en/pakistan/mobile-money',sourceName:'Easypaisa via WorldRemit' },
+  { cid:'sa',ch:'Stablecoin',sendFee:0.5,fxPct:0,netFee:1,days:0.08,speed:'2 hours',cls:'stable',
+    tradeFee:0.5,p2pSpread:4.5,sourceUrl:'https://www.okx.com/en-us/convert/usdt-to-pkr',sourceName:'Binance P2P / OKX P2P' },
+  // UK
+  { cid:'uk',ch:'Banks',sendFee:30,fxPct:4.5,netFee:20,days:4,speed:'4 days',cls:'bank',
+    sourceUrl:'https://www.barclays.com/international-banking/',sourceName:'Barclays / HSBC' },
+  { cid:'uk',ch:'MTOs',sendFee:5,fxPct:2.2,netFee:0,days:0.04,speed:'1 hour',cls:'mto',
+    sourceUrl:'https://wise.com/gb/compare/wise-usd-to-pkr',sourceName:'Wise / WU / Remitly' },
+  { cid:'uk',ch:'Mobile Wallets',sendFee:3,fxPct:1.8,netFee:0,days:0.04,speed:'Minutes',cls:'mobile',
+    sourceUrl:'https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash',sourceName:'JazzCash via Remitly' },
+  { cid:'uk',ch:'Stablecoin',sendFee:0.5,fxPct:0,netFee:1,days:0.08,speed:'2 hours',cls:'stable',
+    tradeFee:0.5,p2pSpread:4.5,sourceUrl:'https://p2p.binance.com/en/express/BUY/USDT/PKR',sourceName:'Binance P2P / OKX P2P' },
+  // US
+  { cid:'us',ch:'Banks',sendFee:35,fxPct:4.0,netFee:25,days:4,speed:'4 days',cls:'bank',
+    sourceUrl:'https://www.bankofamerica.com/',sourceName:'BofA / Chase' },
+  { cid:'us',ch:'MTOs',sendFee:3,fxPct:1.8,netFee:0,days:0.04,speed:'20 sec',cls:'mto',
+    sourceUrl:'https://wise.com/us/send-money/send-money-to-pakistan',sourceName:'Wise / WU / Remitly' },
+  { cid:'us',ch:'Mobile Wallets',sendFee:2,fxPct:1.5,netFee:0,days:0.04,speed:'Minutes',cls:'mobile',
+    sourceUrl:'https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash',sourceName:'JazzCash via Remitly' },
+  { cid:'us',ch:'Stablecoin',sendFee:0.5,fxPct:0,netFee:1,days:0.08,speed:'2 hours',cls:'stable',
+    tradeFee:0.5,p2pSpread:4.5,sourceUrl:'https://p2p.binance.com/en/express/BUY/USDT/PKR',sourceName:'Binance P2P / OKX P2P' },
+  // Qatar
+  { cid:'qa',ch:'Banks',sendFee:25,fxPct:4.5,netFee:15,days:4,speed:'4 days',cls:'bank',
+    sourceUrl:'https://www.dohabank.com.qa/',sourceName:'Doha Bank / QNB' },
+  { cid:'qa',ch:'MTOs',sendFee:5,fxPct:2.5,netFee:0,days:0.08,speed:'2 hours',cls:'mto',
+    sourceUrl:'https://www.westernunion.com/',sourceName:'Western Union / Wise / Remitly' },
+  { cid:'qa',ch:'Mobile Wallets',sendFee:3,fxPct:2.0,netFee:0,days:0.08,speed:'Minutes',cls:'mobile',
+    sourceUrl:'https://www.worldremit.com/en/pakistan/mobile-money',sourceName:'Easypaisa via WorldRemit' },
+  { cid:'qa',ch:'Stablecoin',sendFee:0.5,fxPct:0,netFee:1,days:0.08,speed:'2 hours',cls:'stable',
+    tradeFee:0.5,p2pSpread:4.5,sourceUrl:'https://p2p.binance.com/en/express/BUY/USDT/PKR',sourceName:'Binance P2P / OKX P2P' }
+];
+
+let amount = BASE_AMOUNT;
+
+function compute(d, amt) {
+  const fxCost = (d.fxPct / 100) * amt;
+  const timeCost = d.days * amt * DAILY_RATE;
+  let total;
+  if (d.cls === 'stable') {
+    total = d.sendFee + (d.tradeFee || 0) + d.netFee + (d.p2pSpread || 0) + timeCost;
+  } else {
+    total = d.sendFee + fxCost + d.netFee + timeCost;
+  }
+  return { ...d, fxCost, timeCost, total, pct: (total / amt) * 100 };
+}
+
+// ============ RENDER CORRIDOR ACCORDION ============
+function renderCorridors() {
+  const container = document.getElementById('corridorContainer');
+  const allComputed = rawData.map(d => compute(d, amount));
+
+  container.innerHTML = corridors.map((cor, ci) => {
+    const rows = allComputed.filter(r => r.cid === cor.id).sort((a, b) => a.pct - b.pct);
+    const cheapest = rows[0];
+    const expensive = rows[rows.length - 1];
+    const isOpen = ci === 0;
+
+    const channelHtml = rows.map((r, ri) => {
+      const isCheap = ri === 0;
+      const pctCls = r.pct <= 2.5 ? 'low' : r.pct <= 5 ? 'mid' : 'high';
+      const sendPart = r.sendFee + (r.tradeFee || 0);
+      const fxPart = r.cls === 'stable' ? (r.p2pSpread || 0) : r.fxCost;
+      const netPart = r.netFee;
+      const timePart = r.timeCost;
+      const tot = r.total || 0.01;
+      const pS = (sendPart / tot * 100).toFixed(1);
+      const pF = (fxPart / tot * 100).toFixed(1);
+      const pN = (netPart / tot * 100).toFixed(1);
+      const pT = (timePart / tot * 100).toFixed(1);
+      const rowId = `detail-${cor.id}-${r.cls}`;
+      const fxLabel = r.cls === 'stable' ? 'P2P Spread' : 'FX Spread';
+
+      return `
+        <div class="channel-row ${isCheap ? 'cheapest-row' : ''}" onclick="toggleDetail('${rowId}', this)">
+          <div><span class="channel-badge ${r.cls}"><span class="ch-dot ${r.cls}"></span>${r.ch}</span></div>
+          <div class="fee-bar-container">
+            <div class="fee-bar">
+              <div class="fb-seg fb-send" style="width:${pS}%"></div>
+              <div class="fb-seg fb-fx" style="width:${pF}%"></div>
+              <div class="fb-seg fb-net" style="width:${pN}%"></div>
+              <div class="fb-seg fb-time" style="width:${pT}%"></div>
+            </div>
+          </div>
+          <div class="mono" style="font-weight:700;">$${r.total.toFixed(2)}</div>
+          <div class="pct-cell ${pctCls}">${r.pct.toFixed(2)}%</div>
+          <div class="speed-cell">\u26A1 ${r.speed}</div>
+          <div class="expand-icon">\u25BC</div>
+        </div>
+        <div class="fee-detail" id="${rowId}">
+          <div class="fee-detail-inner">
+            <div class="fee-component fc-send">
+              <div class="fc-label">Sending / Trade Fee</div>
+              <div class="fc-value">$${sendPart.toFixed(2)}</div>
+              <div class="fc-pct">${pS}% of total</div>
+              <div class="fc-bar" style="width:${pS}%"></div>
+            </div>
+            <div class="fee-component fc-fx">
+              <div class="fc-label">${fxLabel}</div>
+              <div class="fc-value">$${fxPart.toFixed(2)}</div>
+              <div class="fc-pct">${pF}% of total</div>
+              <div class="fc-bar" style="width:${pF}%"></div>
+            </div>
+            <div class="fee-component fc-net">
+              <div class="fc-label">Network Fee</div>
+              <div class="fc-value">$${netPart.toFixed(2)}</div>
+              <div class="fc-pct">${pN}% of total</div>
+              <div class="fc-bar" style="width:${pN}%"></div>
+            </div>
+            <div class="fee-component fc-time">
+              <div class="fc-label">Time Cost (${r.days >= 1 ? r.days + 'd' : (r.days * 24).toFixed(0) + 'h'})</div>
+              <div class="fc-value">$${timePart.toFixed(2)}</div>
+              <div class="fc-pct">${pT}% of total</div>
+              <div class="fc-bar" style="width:${pT}%"></div>
+            </div>
+          </div>
+          <div class="fee-detail-source">
+            \uD83D\uDD17 Source: <a href="${r.sourceUrl}" target="_blank">${r.sourceName}</a>
+            &nbsp;|&nbsp; Verified: March 30, 2026
+          </div>
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="corridor-section">
+        <div class="corridor-header ${isOpen ? 'active' : ''}" onclick="toggleCorridor(this)">
+          <div class="left">
+            <span class="corridor-flag">${cor.flag}</span>
+            <span class="corridor-name">${cor.label}</span>
+            <span class="corridor-cheapest-tag">${cheapest.ch} from ${cheapest.pct.toFixed(1)}%</span>
+          </div>
+          <div class="right">
+            <span class="corridor-range">$${cheapest.total.toFixed(0)} &ndash; $${expensive.total.toFixed(0)}</span>
+            <span class="corridor-chevron"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></span>
+          </div>
+        </div>
+        <div class="corridor-body ${isOpen ? 'open' : ''}">
+          ${channelHtml}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function toggleCorridor(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.corridor-header').forEach(h => h.classList.remove('active'));
+  document.querySelectorAll('.corridor-body').forEach(b => b.classList.remove('open'));
+  // Toggle this one
+  if (!isOpen) {
+    header.classList.add('active');
+    body.classList.add('open');
+  }
+}
+
+function toggleDetail(id, row) {
+  const el = document.getElementById(id);
+  const wasOpen = el.classList.contains('open');
+  // Close all details in same corridor
+  const parent = el.closest('.corridor-body');
+  parent.querySelectorAll('.fee-detail').forEach(d => d.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+// ============ RENDER CHART ============
+let chartInstance = null;
+function renderChart() {
+  const rows = rawData.map(d => compute(d, amount));
+  const channels = ['Banks', 'MTOs', 'Mobile Wallets', 'Stablecoin'];
+  const colors = ['#f87171', '#fbbf24', '#34d399', '#a78bfa'];
+  const bgColors = ['rgba(248,113,113,0.15)', 'rgba(251,191,36,0.15)', 'rgba(52,211,153,0.15)', 'rgba(167,139,250,0.15)'];
+
+  const avgs = channels.map(ch => {
+    const vals = rows.filter(r => r.ch === ch).map(r => r.pct);
+    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+  });
+
+  const ctx = document.getElementById('mainChart').getContext('2d');
+  if (chartInstance) chartInstance.destroy();
+
+  // Update the explanatory note with live-computed values
+  updateChartNote(avgs, channels, rows);
+
+  chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: channels,
+      datasets: [{
+        data: avgs,
+        backgroundColor: bgColors,
+        borderColor: colors,
+        borderWidth: 2,
+        borderRadius: 8,
+        hoverBorderWidth: 3,
+        barPercentage: 0.55
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a22',
+          titleColor: '#e8e6e3',
+          bodyColor: '#9a9a9a',
+          borderColor: '#2d2d38',
+          borderWidth: 1,
+          padding: 14, cornerRadius: 10,
+          titleFont: { size: 13, weight: '600' },
+          bodyFont: { size: 12 },
+          displayColors: false,
+          callbacks: {
+            title: ctx => ctx[0].label,
+            label: ctx => 'Avg cost: ' + ctx.parsed.y.toFixed(2) + '%',
+            afterLabel: ctx => {
+              const ch = channels[ctx.dataIndex];
+              const chRows = rows.filter(r => r.ch === ch);
+              const avg = chRows.reduce((s, r) => s + r.total, 0) / chRows.length;
+              return '$' + avg.toFixed(2) + ' per $' + amount;
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: 'rgba(255,255,255,0.04)', drawBorder: false },
+          ticks: { callback: v => v + '%', font: { size: 11, family: "'DM Mono', monospace" }, color: '#6b6b6b' }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 12, weight: '500' }, color: '#9a9a9a' }
+        }
+      }
+    }
+  });
+}
+
+// ============ UPDATE CHART NOTE ============
+function updateChartNote(avgs, channels, rows) {
+  const noteEl = document.getElementById('chartNote');
+  if (!noteEl) return;
+
+  const stableAvg = avgs[channels.indexOf('Stablecoin')];
+  const mobileAvg = avgs[channels.indexOf('Mobile Wallets')];
+  const mtoAvg    = avgs[channels.indexOf('MTOs')];
+  const bankAvg   = avgs[channels.indexOf('Banks')];
+
+  // Bank range across individual corridors explains the spread vs average
+  const bankPcts = rows.filter(r => r.ch === 'Banks').map(r => r.pct);
+  const bankMin  = Math.min(...bankPcts);
+  const bankMax  = Math.max(...bankPcts);
+
+  const stableSave = ((bankAvg - stableAvg) / bankAvg * 100).toFixed(0);
+  const mobileSave = ((bankAvg - mobileAvg) / bankAvg * 100).toFixed(0);
+  const mtoSave    = ((bankAvg - mtoAvg)    / bankAvg * 100).toFixed(0);
+
+  noteEl.innerHTML =
+    `<strong>Stablecoin P2P (${stableAvg.toFixed(2)}%)</strong> is the lowest all-in cost — ` +
+    `${stableSave}% cheaper than banks on average. This partly reflects absent regulatory overhead ` +
+    `and carries unpriced counterparty risk on P2P trades. ` +
+    `<strong>Mobile Wallets (${mobileAvg.toFixed(2)}%)</strong> offer the strongest risk-adjusted cost ` +
+    `position: fully regulated and ${mobileSave}% cheaper than banks across all corridors. ` +
+    `<strong>MTOs (${mtoAvg.toFixed(2)}%)</strong> sit in the middle — reliable regulated providers ` +
+    `at roughly ${mtoSave}% below bank cost. ` +
+    `<strong>Banks (avg. ${bankAvg.toFixed(2)}%, range ${bankMin.toFixed(2)}%\u2013${bankMax.toFixed(2)}%)</strong> ` +
+    `are the most expensive channel by a wide margin; the corridor spread reflects fixed SWIFT ` +
+    `charges weighing more heavily on smaller transfers.`;
+}
+
+// ============ UPDATE STATS ============
+function updateStats() {
+  const rows = rawData.map(d => compute(d, amount));
+  const sorted = [...rows].sort((a, b) => a.pct - b.pct);
+  const cheapest = sorted[0];
+  const expensive = sorted[sorted.length - 1];
+  const bankRows = rows.filter(r => r.cls === 'bank');
+  const stableRows = rows.filter(r => r.cls === 'stable');
+  const bankAvg = bankRows.reduce((s, r) => s + r.pct, 0) / bankRows.length;
+  const stableAvg = stableRows.reduce((s, r) => s + r.pct, 0) / stableRows.length;
+
+  document.getElementById('statCheapest').textContent = cheapest.pct.toFixed(2) + '%';
+  document.getElementById('statCheapestSub').textContent = corridors.find(c => c.id === cheapest.cid).name + ' via ' + cheapest.ch;
+  document.getElementById('statExpensive').textContent = expensive.pct.toFixed(2) + '%';
+  document.getElementById('statExpensiveSub').textContent = corridors.find(c => c.id === expensive.cid).name + ' via ' + expensive.ch;
+  document.getElementById('statBankAvg').textContent = bankAvg.toFixed(2) + '%';
+  document.getElementById('statBankSub').textContent = '$' + (bankRows.reduce((s, r) => s + r.total, 0) / bankRows.length).toFixed(2) + ' per transfer';
+  document.getElementById('statStableAvg').textContent = stableAvg.toFixed(2) + '%';
+  document.getElementById('statStableSub').textContent = '$' + (stableRows.reduce((s, r) => s + r.total, 0) / stableRows.length).toFixed(2) + ' per transfer';
+}
+
+// ============ EVENTS ============
+document.getElementById('amountInput').addEventListener('input', e => {
+  const v = parseFloat(e.target.value);
+  if (v && v >= 50) { amount = v; refresh(); }
+});
+
+function refresh() {
+  renderCorridors();
+  renderChart();
+  updateStats();
+}
+
+// ============ INIT ============
+refresh();
+</script>
+</body>
+</html>

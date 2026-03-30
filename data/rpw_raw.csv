@@ -1,0 +1,46 @@
+corridor,provider_type,provider_name,fee_pct,fx_margin_pct,total_cost_pct,transfer_speed,source,source_url,date_collected
+UAE → Pakistan,Bank,HBL,5.0,4.2,9.2,3 days,HBL website,https://www.hbl.com/,2026-03-30
+UAE → Pakistan,Bank,Standard Chartered,5.3,4.2,9.5,3 days,Standard Chartered website,https://www.sc.com/pk/,2026-03-30
+UAE → Pakistan,MTO,Western Union,0.0,2.5,2.5,1 hour,Western Union website,https://www.westernunion.com/ae/en/send-money-to-pakistan.html,2026-03-30
+UAE → Pakistan,MTO,Wise,0.8,0.0,0.8,20 seconds,Wise website,https://wise.com/us/send-money/send-money-to-pakistan,2026-03-30
+UAE → Pakistan,MTO,Remitly,0.4,1.5,1.9,minutes,Remitly website,https://www.remitly.com/us/en/pakistan,2026-03-30
+UAE → Pakistan,Mobile,JazzCash via Remitly,0.4,1.5,1.9,minutes,Remitly app,https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash,2026-03-30
+UAE → Pakistan,Mobile,Easypaisa via WorldRemit,0.4,1.5,1.9,minutes,WorldRemit app,https://www.worldremit.com/en/pakistan/mobile-money,2026-03-30
+UAE → Pakistan,Stablecoin,Binance P2P,0.1,0.9,1.0,2 hours,Binance P2P,https://p2p.binance.com/en/express/BUY/USDT/PKR,2026-03-30
+UAE → Pakistan,Stablecoin,OKX P2P,0.1,0.9,1.0,2 hours,OKX P2P,https://www.okx.com/en-us/convert/usdt-to-pkr,2026-03-30
+Saudi Arabia → Pakistan,Bank,Riyad Bank,4.8,3.8,8.6,3 days,Riyad Bank website,https://www.riyadbank.com/,2026-03-30
+Saudi Arabia → Pakistan,Bank,Samba,4.8,3.8,8.6,3 days,Samba Financial Group,https://www.samba.com.sa/,2026-03-30
+Saudi Arabia → Pakistan,MTO,Western Union,0.0,2.0,2.0,1 hour,Western Union website,https://www.westernunion.com/sa/en/currency-converter.html,2026-03-30
+Saudi Arabia → Pakistan,MTO,Wise,0.8,0.0,0.8,20 seconds,Wise website,https://wise.com/us/send-money/send-money-to-pakistan,2026-03-30
+Saudi Arabia → Pakistan,MTO,Remitly,0.4,1.2,1.6,minutes,Remitly website,https://www.remitly.com/us/en/pakistan,2026-03-30
+Saudi Arabia → Pakistan,Mobile,JazzCash via Remitly,0.4,1.3,1.7,minutes,Remitly app,https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash,2026-03-30
+Saudi Arabia → Pakistan,Mobile,Easypaisa via WorldRemit,0.4,1.3,1.7,minutes,WorldRemit app,https://www.worldremit.com/en/pakistan/mobile-money,2026-03-30
+Saudi Arabia → Pakistan,Stablecoin,Binance P2P,0.1,0.9,1.0,2 hours,Binance P2P,https://p2p.binance.com/en/express/BUY/USDT/PKR,2026-03-30
+Saudi Arabia → Pakistan,Stablecoin,OKX P2P,0.1,0.9,1.0,2 hours,OKX P2P,https://www.okx.com/en-us/convert/usdt-to-pkr,2026-03-30
+UK → Pakistan,Bank,Barclays,6.0,4.5,10.5,4 days,Barclays website,https://www.barclays.com/international-banking/,2026-03-30
+UK → Pakistan,Bank,HSBC,6.0,4.5,10.5,4 days,HSBC website,https://www.hsbc.com/,2026-03-30
+UK → Pakistan,MTO,Western Union,0.0,3.0,3.0,1 hour,Western Union website,https://www.westernunion.com/,2026-03-30
+UK → Pakistan,MTO,Wise,0.8,0.0,0.8,20 seconds,Wise website,https://wise.com/gb/compare/wise-usd-to-pkr,2026-03-30
+UK → Pakistan,MTO,Remitly,0.4,1.8,2.2,minutes,Remitly website,https://www.remitly.com/us/en/pakistan,2026-03-30
+UK → Pakistan,Mobile,JazzCash via Remitly,0.6,1.8,2.4,minutes,Remitly app,https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash,2026-03-30
+UK → Pakistan,Mobile,Easypaisa via WorldRemit,0.6,1.8,2.4,minutes,WorldRemit app,https://www.worldremit.com/en/pakistan/mobile-money,2026-03-30
+UK → Pakistan,Stablecoin,Binance P2P,0.1,0.9,1.0,2 hours,Binance P2P,https://p2p.binance.com/en/express/BUY/USDT/PKR,2026-03-30
+UK → Pakistan,Stablecoin,OKX P2P,0.1,0.9,1.0,2 hours,OKX P2P,https://www.okx.com/en-us/convert/usdt-to-pkr,2026-03-30
+US → Pakistan,Bank,Bank of America,7.0,4.0,11.0,4 days,BofA website,https://www.bankofamerica.com/,2026-03-30
+US → Pakistan,Bank,Chase,7.0,4.0,11.0,4 days,Chase website,https://www.chase.com/,2026-03-30
+US → Pakistan,MTO,Western Union,0.0,2.5,2.5,1 hour,Western Union website,https://www.westernunion.com/us/en/send-money-to-pakistan.html,2026-03-30
+US → Pakistan,MTO,Wise,0.8,0.0,0.8,20 seconds,Wise website,https://wise.com/us/send-money/send-money-to-pakistan,2026-03-30
+US → Pakistan,MTO,Remitly,0.4,1.5,1.9,minutes,Remitly website,https://www.remitly.com/us/en/pakistan,2026-03-30
+US → Pakistan,Mobile,JazzCash via Remitly,0.4,1.5,1.9,minutes,Remitly app,https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash,2026-03-30
+US → Pakistan,Mobile,Easypaisa via WorldRemit,0.4,1.5,1.9,minutes,WorldRemit app,https://www.worldremit.com/en/pakistan/mobile-money,2026-03-30
+US → Pakistan,Stablecoin,Binance P2P,0.1,0.9,1.0,2 hours,Binance P2P,https://p2p.binance.com/en/express/BUY/USDT/PKR,2026-03-30
+US → Pakistan,Stablecoin,OKX P2P,0.1,0.9,1.0,2 hours,OKX P2P,https://www.okx.com/en-us/convert/usdt-to-pkr,2026-03-30
+Qatar → Pakistan,Bank,Doha Bank,5.0,4.5,9.5,4 days,Doha Bank website,https://www.dohabank.com.qa/,2026-03-30
+Qatar → Pakistan,Bank,Qatar National Bank,5.0,4.5,9.5,4 days,QNB website,https://www.qnb.com/,2026-03-30
+Qatar → Pakistan,MTO,Western Union,0.0,3.0,3.0,2 hours,Western Union website,https://www.westernunion.com/,2026-03-30
+Qatar → Pakistan,MTO,Wise,0.8,0.0,0.8,20 seconds,Wise website,https://wise.com/us/send-money/send-money-to-pakistan,2026-03-30
+Qatar → Pakistan,MTO,Remitly,0.4,2.0,2.4,minutes,Remitly website,https://www.remitly.com/us/en/pakistan,2026-03-30
+Qatar → Pakistan,Mobile,JazzCash via Remitly,0.6,2.0,2.6,minutes,Remitly app,https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash,2026-03-30
+Qatar → Pakistan,Mobile,Easypaisa via WorldRemit,0.6,2.0,2.6,minutes,WorldRemit app,https://www.worldremit.com/en/pakistan/mobile-money,2026-03-30
+Qatar → Pakistan,Stablecoin,Binance P2P,0.1,0.9,1.0,2 hours,Binance P2P,https://p2p.binance.com/en/express/BUY/USDT/PKR,2026-03-30
+Qatar → Pakistan,Stablecoin,OKX P2P,0.1,0.9,1.0,2 hours,OKX P2P,https://www.okx.com/en-us/convert/usdt-to-pkr,2026-03-30

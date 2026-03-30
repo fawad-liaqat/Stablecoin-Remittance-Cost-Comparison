@@ -1,0 +1,21 @@
+corridor,channel,sending_fee_usd,fx_spread_pct,fx_spread_usd,receiving_fee_usd,network_fee_usd,settlement_days,time_cost_usd,all_in_cost_usd,all_in_cost_pct,date_collected,source
+UAE → Pakistan,Banks,25.00,4.2,21.00,0.00,15.00,3,0.43,61.43,12.29,2026-03-30,https://www.hbl.com/
+UAE → Pakistan,MTOs,4.00,1.8,9.00,0.00,0.00,0.04,0.01,13.01,2.60,2026-03-30,https://wise.com/us/send-money/send-money-to-pakistan
+UAE → Pakistan,Mobile Wallets,2.00,1.5,7.50,0.00,0.00,0.04,0.01,9.51,1.90,2026-03-30,https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash
+UAE → Pakistan,Stablecoin,1.00,0.9,4.50,0.00,1.00,0.08,0.01,6.51,1.30,2026-03-30,https://p2p.binance.com/en/express/BUY/USDT/PKR
+Saudi Arabia → Pakistan,Banks,20.00,3.8,19.00,0.00,15.00,3,0.43,54.43,10.89,2026-03-30,https://www.riyadbank.com/
+Saudi Arabia → Pakistan,MTOs,4.00,1.5,7.50,0.00,0.00,0.04,0.01,11.51,2.30,2026-03-30,https://wise.com/us/send-money/send-money-to-pakistan
+Saudi Arabia → Pakistan,Mobile Wallets,2.00,1.3,6.50,0.00,0.00,0.04,0.01,8.51,1.70,2026-03-30,https://www.worldremit.com/en/pakistan/mobile-money
+Saudi Arabia → Pakistan,Stablecoin,1.00,0.9,4.50,0.00,1.00,0.08,0.01,6.51,1.30,2026-03-30,https://www.okx.com/en-us/convert/usdt-to-pkr
+UK → Pakistan,Banks,30.00,4.5,22.50,0.00,20.00,4,0.58,73.08,14.62,2026-03-30,https://www.barclays.com/international-banking/
+UK → Pakistan,MTOs,5.00,2.2,11.00,0.00,0.00,0.04,0.01,16.01,3.20,2026-03-30,https://wise.com/gb/compare/wise-usd-to-pkr
+UK → Pakistan,Mobile Wallets,3.00,1.8,9.00,0.00,0.00,0.04,0.01,12.01,2.40,2026-03-30,https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash
+UK → Pakistan,Stablecoin,1.00,0.9,4.50,0.00,1.00,0.08,0.01,6.51,1.30,2026-03-30,https://p2p.binance.com/en/express/BUY/USDT/PKR
+US → Pakistan,Banks,35.00,4.0,20.00,0.00,25.00,4,0.58,80.58,16.12,2026-03-30,https://www.bankofamerica.com/
+US → Pakistan,MTOs,3.00,1.8,9.00,0.00,0.00,0.04,0.01,12.01,2.40,2026-03-30,https://wise.com/us/send-money/send-money-to-pakistan
+US → Pakistan,Mobile Wallets,2.00,1.5,7.50,0.00,0.00,0.04,0.01,9.51,1.90,2026-03-30,https://www.remitly.com/us/en/providers-pakistan/send-money-to-jazzcash
+US → Pakistan,Stablecoin,1.00,0.9,4.50,0.00,1.00,0.08,0.01,6.51,1.30,2026-03-30,https://p2p.binance.com/en/express/BUY/USDT/PKR
+Qatar → Pakistan,Banks,25.00,4.5,22.50,0.00,15.00,4,0.58,63.08,12.62,2026-03-30,https://www.dohabank.com.qa/
+Qatar → Pakistan,MTOs,5.00,2.5,12.50,0.00,0.00,0.08,0.01,17.51,3.50,2026-03-30,https://www.westernunion.com/
+Qatar → Pakistan,Mobile Wallets,3.00,2.0,10.00,0.00,0.00,0.08,0.01,13.01,2.60,2026-03-30,https://www.worldremit.com/en/pakistan/mobile-money
+Qatar → Pakistan,Stablecoin,1.00,0.9,4.50,0.00,1.00,0.08,0.01,6.51,1.30,2026-03-30,https://p2p.binance.com/en/express/BUY/USDT/PKR
